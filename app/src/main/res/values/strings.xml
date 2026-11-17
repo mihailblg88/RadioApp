@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Моё радио</string>
+    <string name="search_hint">Поиск станции по названию</string>
+    <string name="filter_country">Страна: %1$s</string>
+    <string name="filter_genre">Жанр: %1$s</string>
+    <string name="all_countries">Все страны</string>
+    <string name="all_genres">Все жанры</string>
+    <string name="tab_catalog">Каталог</string>
+    <string name="tab_favorites">Избранное</string>
+    <string name="empty_catalog">Ничего не найдено. Попробуйте изменить страну, жанр или запрос.</string>
+    <string name="empty_favorites">В избранном пока пусто. Нажмите звёздочку у станции или добавьте свою кнопкой «+».</string>
+    <string name="error_network">Не удалось загрузить каталог. Проверьте интернет и измените запрос, чтобы повторить.</string>
+    <string name="error_playback">Не удалось воспроизвести станцию</string>
+    <string name="error_player_not_ready">Плеер ещё запускается, попробуйте через секунду</string>
+    <string name="now_nothing">Выберите станцию</string>
+    <string name="connecting">Подключение…</string>
+    <string name="play_pause">Воспроизведение / пауза</string>
+    <string name="previous_station">Предыдущая станция</string>
+    <string name="next_station">Следующая станция</string>
+    <string name="favorite">Избранное</string>
+    <string name="add_title">Своя станция</string>
+    <string name="add_name_hint">Название</string>
+    <string name="add_url_hint">Ссылка на поток (http…)</string>
+    <string name="add_save">Сохранить</string>
+    <string name="add_bad_url">Ссылка должна начинаться с http:// или https://</string>
+    <string name="add_done">Добавлено в избранное</string>
+</resources>
