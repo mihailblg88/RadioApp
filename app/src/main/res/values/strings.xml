@@ -18,6 +18,7 @@
     <string name="play_pause">Воспроизведение / пауза</string>
     <string name="previous_station">Предыдущая станция</string>
     <string name="next_station">Следующая станция</string>
+    <string name="shuffle_play">Слушать вперемешку</string>
     <string name="favorite">Избранное</string>
     <string name="add_title">Своя станция</string>
     <string name="add_name_hint">Название</string>

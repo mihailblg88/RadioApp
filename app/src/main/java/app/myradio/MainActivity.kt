@@ -53,6 +53,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var buffering: ProgressBar
     private lateinit var prevButton: ImageButton
     private lateinit var nextButton: ImageButton
+    private lateinit var shuffleButton: Button
 
     /** Список, который сейчас на экране. */
     private var shown: List<Station> = emptyList()
@@ -144,6 +145,8 @@ class MainActivity : AppCompatActivity() {
         nextButton = findViewById(R.id.nextButton)
         prevButton.setOnClickListener { skip(forward = false) }
         nextButton.setOnClickListener { skip(forward = true) }
+        shuffleButton = findViewById(R.id.shuffleButton)
+        shuffleButton.setOnClickListener { playFavoritesShuffled() }
         filterRow = findViewById(R.id.filterRow)
         countryButton = findViewById(R.id.countryButton)
         genreButton = findViewById(R.id.genreButton)
@@ -259,6 +262,8 @@ class MainActivity : AppCompatActivity() {
             catalog
         }
         shown = items
+        shuffleButton.visibility =
+            if (showingFavorites && items.size > 1) View.VISIBLE else View.GONE
         adapter.submit(items, controller?.currentMediaItem?.mediaId)
 
         emptyView.visibility = if (items.isEmpty()) View.VISIBLE else View.GONE
@@ -356,7 +361,23 @@ class MainActivity : AppCompatActivity() {
         }
         val queue = if (shown.any { it.id == station.id }) shown else listOf(station)
         val index = queue.indexOfFirst { it.id == station.id }
+        c.shuffleModeEnabled = false
         c.setMediaItems(queue.map { toMediaItem(it) }, index, C.TIME_UNSET)
+        c.prepare()
+        c.play()
+    }
+
+    /** Избранное в случайном порядке: случайная первая станция, дальше «вперёд/назад» — тоже вразнобой. */
+    private fun playFavoritesShuffled() {
+        val c = controller
+        if (c == null) {
+            Toast.makeText(this, R.string.error_player_not_ready, Toast.LENGTH_SHORT).show()
+            return
+        }
+        val list = shown
+        if (list.isEmpty()) return
+        c.setMediaItems(list.map { toMediaItem(it) }, list.indices.random(), C.TIME_UNSET)
+        c.shuffleModeEnabled = true
         c.prepare()
         c.play()
     }
@@ -405,7 +426,11 @@ class MainActivity : AppCompatActivity() {
         val song = c.mediaMetadata.title?.toString().orEmpty()
         val isBuffering = c.playWhenReady && c.playbackState == Player.STATE_BUFFERING
 
-        nowTitle.text = stationName
+        nowTitle.text = if (c.shuffleModeEnabled && c.mediaItemCount > 1) {
+            "\uD83D\uDD00 " + stationName
+        } else {
+            stationName
+        }
         val subtitle = when {
             c.playerError != null -> getString(R.string.error_playback)
             isBuffering -> getString(R.string.connecting)
